@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	private float currentTime;
 	public GameObject Player;
 
+
 	AudioSource music;
 
 	private int finalScore;
@@ -32,12 +33,14 @@ public class GameManager : MonoBehaviour
 	// setup the game
 	void Start ()
 	{
+		
 		currentTime = 0.0f;
 		// get a reference to the GameManager component for use by other scripts
 		if (gm == null)
 			gm = this.gameObject.GetComponent<GameManager> ();
 
 	}
+
 
 	// this is the main game event loop
 	void Update ()
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
 			currentTime += Time.deltaTime;
 			mainTimer.text = currentTime.ToString ("00:00.00");
 		}
-
+			
 	}
 
 
@@ -64,6 +67,8 @@ public class GameManager : MonoBehaviour
 		ScoreManager.score = finalScore;
 		song.volume = 0.6f;
 		song.pitch = 0.8f;
+		int finalTime = (int)(currentTime);
+		PlayerPrefs.SetInt ("Player's Time", finalTime);
 	}
 
 }
