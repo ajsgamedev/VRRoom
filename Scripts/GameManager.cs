@@ -15,14 +15,17 @@ public class GameManager : MonoBehaviour
 
 	public float startTime = 0.0f;
 	public Text mainTimer;
+	public Text lapCount;
 
 	private float currentTime;
 	public GameObject Player;
-
+	public GameObject EndGameObjects;
 
 	AudioSource music;
 
 	private int finalScore;
+	float mins;
+	float secs;
 
 	void Awake ()
 	{
@@ -45,7 +48,7 @@ public class GameManager : MonoBehaviour
 	// this is the main game event loop
 	void Update ()
 	{
-		if (ScoreManager.score >= 25)
+		if (PlayerMovement.teleportCount >= 3)
 		{
 			finalScore = ScoreManager.score;
 			EndGame ();
@@ -53,7 +56,10 @@ public class GameManager : MonoBehaviour
 		else
 		{
 			currentTime += Time.deltaTime;
-			mainTimer.text = currentTime.ToString ("00:00.00");
+			mins = currentTime / 60;
+			secs = currentTime % 60;
+			mainTimer.text = mins.ToString ("00:")+secs.ToString("00");
+			lapCount.text = "Lap: "+PlayerMovement.teleportCount+"/3";
 		}
 			
 	}
@@ -63,12 +69,15 @@ public class GameManager : MonoBehaviour
 	public void EndGame ()
 	{
 		// game is over
-		Time.timeScale = 0;
+		//Time.timeScale = 0;
 		ScoreManager.score = finalScore;
 		song.volume = 0.6f;
 		song.pitch = 0.8f;
 		int finalTime = (int)(currentTime);
 		PlayerPrefs.SetInt ("Player's Time", finalTime);
+		Player.SetActive (false);
+		EndGameObjects.SetActive (true);
+
 	}
 
 }

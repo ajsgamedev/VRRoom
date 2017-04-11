@@ -10,6 +10,7 @@ public class Boundary
 
 public class PlayerMovement : MonoBehaviour {
 
+	public static int teleportCount = 0;
 	public float speed;
 
 	public float tilt;
@@ -59,7 +60,8 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		if (coll.gameObject.tag == "teleport")
 		{
-			transform.position = new Vector3 (0.0f, 0.0f, 0.0f);
+			transform.position = new Vector3 (transform.position.x, 0.0f, 0.0f);
+			teleportCount++;
 		}
 
 		if (coll.gameObject.tag == "obsta")
