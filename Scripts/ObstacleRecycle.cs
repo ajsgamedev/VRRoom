@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ObstacleRecycle : MonoBehaviour {
 	
-	float travelDistance = 50f;
+	float travelDistance = 100f;
 	float speed = 20f;
 	
 	void OnEnable()

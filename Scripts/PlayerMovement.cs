@@ -45,13 +45,11 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		float moveHorizontal = Input.acceleration.x;
 
-		//transform.position += (Vector3.forward*reduceSpeed) * Time.deltaTime;
+		transform.Translate(moveHorizontal,0,0);
 
-		//transform.Translate(moveHorizontal,0,0);
+		Vector3 move = new Vector3 (0.0f, 0.0f,moveHorizontal);
 
-		//Vector3 move = new Vector3 (0.0f, 0.0f,moveHorizontal);
-
-		//GetComponent<Rigidbody>().velocity = move*(speed-reduceSpeed);
+		GetComponent<Rigidbody>().velocity = move*(speed-reduceSpeed);
 		GetComponent<Rigidbody> ().position = new Vector3 (
 			Mathf.Clamp (GetComponent<Rigidbody> ().position.x, boundary.xMin, boundary.xMax),
 			0.0f,
