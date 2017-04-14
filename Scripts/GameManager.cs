@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
 	public float startTime = 0.0f;
 	public Text mainTimer;
+	public Text finalTimer;
 	public Text lapCount;
 
 	private float currentTime;
@@ -23,20 +24,23 @@ public class GameManager : MonoBehaviour
 
 	AudioSource music;
 
-	private int finalScore;
-	float mins;
-	float secs;
+	bool endGameOccurred;
+
+	float finalTime;
 
 	void Awake ()
 	{
 		Time.timeScale = 1;
 		Player.SetActive (true);
+		EndGameObjects.SetActive (false);
+
 	}
 
 	// setup the game
 	void Start ()
 	{
-		
+		EndGameObjects.SetActive (false);
+		endGameOccurred = false;
 		currentTime = 0.0f;
 		// get a reference to the GameManager component for use by other scripts
 		if (gm == null)
@@ -50,15 +54,15 @@ public class GameManager : MonoBehaviour
 	{
 		if (PlayerMovement.teleportCount >= 3)
 		{
-			finalScore = ScoreManager.score;
-			EndGame ();
+			if (!endGameOccurred) {
+				EndGame ();
+				endGameOccurred = true;
+			}
 		}
 		else
 		{
 			currentTime += Time.deltaTime;
-			mins = currentTime / 60;
-			secs = currentTime % 60;
-			mainTimer.text = mins.ToString ("00:")+secs.ToString("00");
+			mainTimer.text = timerConverter (currentTime);
 			lapCount.text = "Lap: "+PlayerMovement.teleportCount+"/3";
 		}
 			
@@ -69,14 +73,27 @@ public class GameManager : MonoBehaviour
 	public void EndGame ()
 	{
 		// game is over
-		//Time.timeScale = 0;
-		ScoreManager.score = finalScore;
 		song.volume = 0.6f;
 		song.pitch = 0.8f;
-		int finalTime = (int)(currentTime);
-		PlayerPrefs.SetInt ("Player's Time", finalTime);
+		finalTime = currentTime;
+		PlayerPrefs.SetInt ("Player's Time", (int)(currentTime));
 		Player.SetActive (false);
 		EndGameObjects.SetActive (true);
+
+		finalTimer.text = "Time: "+ timerConverter (finalTime);
+
+	}
+
+
+	private string timerConverter(float time)
+	{
+		string textTime;
+		float mins = currentTime / 60;
+		float secs = currentTime % 60;
+
+		textTime = mins.ToString ("00:")+secs.ToString("00");
+
+		return textTime;
 
 	}
 

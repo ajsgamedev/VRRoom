@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ObstaclePool : MonoBehaviour {
 
-	//public float minSecondsBetweenSpawning = 3.0f;
-	//public float maxSecondsBetweenSpawning = 6.0f;
+	public float minSecondsBetweenSpawning = 2.0f;
+	public float maxSecondsBetweenSpawning = 6.0f;
 	private float savedTime;
 	private float secondsBetweenSpawning;
 	private int randNum;
@@ -30,15 +30,12 @@ public class ObstaclePool : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			MakeThingToSpawn ();
-		}
-		/*if (Time.time - savedTime >= secondsBetweenSpawning) // is it time to spawn again?
+		if (Time.time - savedTime >= secondsBetweenSpawning) // is it time to spawn again?
 		{
 			MakeThingToSpawn ();
 			savedTime = Time.time; // store for next spawn
-			//secondsBetweenSpawning = Random.Range (minSecondsBetweenSpawning, maxSecondsBetweenSpawning);
-		}*/	
+			secondsBetweenSpawning = Random.Range (minSecondsBetweenSpawning, maxSecondsBetweenSpawning);
+		}
 	}
 
 	void MakeThingToSpawn ()

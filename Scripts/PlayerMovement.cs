@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float tilt;
 	public Boundary boundary;
 	Vector3 move;
-	float reduceSpeed=1;
+	float reduceSpeed;
 
 	void Awake()
 	{
@@ -33,24 +33,29 @@ public class PlayerMovement : MonoBehaviour {
 			move = new Vector3 (0.0f, 0.0f, Input.GetAxis ("Horizontal"));
 
 		}
+		teleportCount = 0;
 	}
-
+	void Start()
+	{
+		teleportCount = 0;
+		reduceSpeed = 0.7f;
+	}
 
 	void Update ()
 	{
 		float moveHorizontal = Input.acceleration.x;
 
-		transform.position += (Vector3.forward*reduceSpeed) * Time.deltaTime;
+		//transform.position += (Vector3.forward*reduceSpeed) * Time.deltaTime;
 
-		transform.Translate(moveHorizontal,0,0);
+		//transform.Translate(moveHorizontal,0,0);
 
-		Vector3 move = new Vector3 (0.0f, 0.0f,moveHorizontal);
+		//Vector3 move = new Vector3 (0.0f, 0.0f,moveHorizontal);
 
-		GetComponent<Rigidbody>().velocity = move*speed;
+		//GetComponent<Rigidbody>().velocity = move*(speed-reduceSpeed);
 		GetComponent<Rigidbody> ().position = new Vector3 (
 			Mathf.Clamp (GetComponent<Rigidbody> ().position.x, boundary.xMin, boundary.xMax),
 			0.0f,
-			transform.position.z+0.7f);
+			transform.position.z+reduceSpeed);
 
 		GetComponent<Rigidbody>().rotation = Quaternion.Euler (0.0f, 0.0f, GetComponent<Rigidbody>().velocity.z * -tilt);
 
@@ -67,16 +72,17 @@ public class PlayerMovement : MonoBehaviour {
 		if (coll.gameObject.tag == "obsta")
 		{
 			StartCoroutine (SpeedDown ());
+			Debug.Log ("Hit");
 		}
 
 	}
 
 	IEnumerator SpeedDown()
 	{
-		reduceSpeed /= 2;
+		reduceSpeed = 0.3f;
 
-		yield return new WaitForSeconds(10);
+		yield return new WaitForSeconds(3);
 
-		reduceSpeed *= 2;
+		reduceSpeed = 0.7f;
 	}
 }
