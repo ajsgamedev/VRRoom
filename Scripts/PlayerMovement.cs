@@ -70,7 +70,6 @@ public class PlayerMovement : MonoBehaviour {
 		if (coll.gameObject.tag == "obsta")
 		{
 			StartCoroutine (SpeedDown ());
-			Debug.Log ("Hit");
 		}
 
 	}

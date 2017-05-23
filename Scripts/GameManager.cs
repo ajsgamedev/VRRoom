@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 		song.pitch = 0.8f;
 		finalTime = currentTime;
 		PlayerPrefs.SetInt ("Player's Time", (int)(currentTime));
+		PlayerPrefs.Save ();
 		Player.SetActive (false);
 		EndGameObjects.SetActive (true);
 
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
 	private string timerConverter(float time)
 	{
 		string textTime;
-		float mins = currentTime / 60;
+		int mins = (int)(currentTime / 60);
 		float secs = currentTime % 60;
 
 		textTime = mins.ToString ("00:")+secs.ToString("00");
@@ -96,5 +97,4 @@ public class GameManager : MonoBehaviour
 		return textTime;
 
 	}
-
 }

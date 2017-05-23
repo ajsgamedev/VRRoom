@@ -2,10 +2,9 @@
 using System.Collections;
 
 public class ObstacleRecycle : MonoBehaviour {
-	
+
 	float travelDistance = 100f;
 	float speed = 20f;
-	
 	void OnEnable()
 	{
 		Invoke ("Destory", 2f);
@@ -17,13 +16,13 @@ public class ObstacleRecycle : MonoBehaviour {
 	{
 		gameObject.SetActive (false);
 	}
-	
+
 	void OnDisable()
 	{
 		CancelInvoke ();
 		StopAllCoroutines();
 	}
-	
+
 	IEnumerator Move()
 	{
 		float total = 0;
